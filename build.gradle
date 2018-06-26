@@ -20,6 +20,10 @@ allprojects {
         google()
         jcenter()
     }
+
+    dependencies{
+
+    }
 }
 
 task clean(type: Delete) {
