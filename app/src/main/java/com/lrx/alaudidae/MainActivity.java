@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             String[] files = getAssets().list("");
 
             for (String file : files) {
-                Logger.d(TAG, "file:" + file);
+                Logger.d("file:" + file);
             }
         } catch (IOException e) {
             e.printStackTrace();
