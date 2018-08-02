@@ -16,6 +16,8 @@ import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] _dataset = new String[]{"1", "2", "3"};
 
+    private Gson gson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
