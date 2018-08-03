@@ -12,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lrx.alaudidae.Model.BookResponse;
 import com.orhanobut.logger.Logger;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.apache.commons.io.IOUtils;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -26,9 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter       _adapter;
     private RecyclerView.LayoutManager _layoutManager;
 
-    private String[] _dataset = new String[]{"1", "2", "3"};
-
-    private Gson gson;
+    private Gson _gson;
+    BookResponse _response;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +46,22 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        _gson = new Gson();
+        try {
+            InputStream books =  getAssets().open("books.json");
+            String bookJSONString =  IOUtils.toString(books, "UTF-8");
+            _response =  _gson.fromJson(bookJSONString, BookResponse.class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         _recyclerView = findViewById(R.id.my_recycler_view);
         _recyclerView.setHasFixedSize(true);
 
         _layoutManager = new LinearLayoutManager(this);
         _recyclerView.setLayoutManager(_layoutManager);
 
-        _adapter = new MyAdapter(_dataset);
+        _adapter = new MyAdapter(_response.books);
         _recyclerView.setAdapter(_adapter);
         _recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -70,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-        private String[] _dataset;
+        private List<BookResponse.Book> _dataset;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public TextView _textView;
@@ -81,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        MyAdapter(String[] dataset) {
+        MyAdapter(List<BookResponse.Book> dataset) {
             _dataset = dataset;
         }
 
@@ -94,12 +105,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            holder._textView.setText(_dataset[position]);
+            BookResponse.Book book =  _dataset.get(position);
+            holder._textView.setText(book.title);
         }
 
         @Override
         public int getItemCount() {
-            return _dataset.length;
+            return _dataset.size();
         }
     }
 }

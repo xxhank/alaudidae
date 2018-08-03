@@ -6,19 +6,19 @@ import java.lang.reflect.Array;
 import java.util.List;
 
 public class BookResponse {
-    int status;
-    int message;
+    public int    status;
+    public String message;
 
     @SerializedName("data")
-    List<Book> books;
+    public List<Book> books;
 
-    class Book {
+    public class Book {
         @SerializedName("bookid")
-        String id;
-        String title;
-        String brief;
+        public String id;
+        public String title;
+        public String brief;
         @SerializedName("subscription_count")
-        int subscriptionsCount;
+        public int    subscriptionsCount;
     }
 }
 
