@@ -9,6 +9,22 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:layout_weight="1"/>
+
+
+    <com.github.lzyzsd.jsbridge.BridgeWebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#cdcdcd">
+    </com.github.lzyzsd.jsbridge.BridgeWebView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parse"
+        android:id="@+id/parse_button"
+        android:layout_gravity="center"/>
 </LinearLayout>
