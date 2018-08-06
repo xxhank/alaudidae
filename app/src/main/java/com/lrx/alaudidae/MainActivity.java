@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
@@ -62,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         _webView = findViewById(R.id.webView);
-        _webView.getSettings().setJavaScriptEnabled(true);
+        WebSettings settings = _webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setAllowFileAccessFromFileURLs(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
         _webView.setWebContentsDebuggingEnabled(true);
 
 

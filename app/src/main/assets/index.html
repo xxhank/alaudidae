@@ -10,6 +10,40 @@
     <div id="show"></div>
 </body>
 <script type="text/javascript">
+function _isAndroid() {
+    var ua = navigator.userAgent.toLowerCase();
+    var isA = ua.indexOf("android") > -1;
+    if (isA) {
+        return true;
+    }
+    return false;
+}
+
+function _isIphone() {
+    var ua = navigator.userAgent.toLowerCase();
+    var isIph = ua.indexOf("iphone") > -1;
+    if (isIph) {
+        return true;
+    }
+    return false;
+}//17341958290
+
+function parseIndexPage(url, callback) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(xhttp.responseText, "text/html");
+            console.log(doc);
+
+            var menu = doc.getElementById("menu");
+            if (menu instanceof ) menu.getElementsByTagName("a");
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
+}
+
 function connectWebViewJavascriptBridge(callback) {
     if (window.WebViewJavascriptBridge) {
         callback(WebViewJavascriptBridge)
@@ -35,11 +69,14 @@ connectWebViewJavascriptBridge(function(bridge) {
         }
     });
     bridge.registerHandler("parse", function(data, responseCallback) {
-        document.getElementById("show").innerHTML = ("data from Java: = " + data);
-        if (responseCallback) {
-            var responseData = "Javascript Says Right back aka!";
-            responseCallback(responseData);
-        }
+        // document.getElementById("show").innerHTML = ("data from Java: = " + data);
+        // if (responseCallback) {
+        //     var responseData = "Javascript Says Right back aka!";
+        //     responseCallback(responseData);
+        // }
+        if (data == undefined) { console.log("Invalid data"); return; }
+        var url = data;
+        parseIndexPage(url, responseCallback);
     });
 })
 </script>
